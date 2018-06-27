@@ -12,8 +12,7 @@ class SearchViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var searchBar: UISearchBar!
     
-    var searchResults: [String] = []
-    
+    var searchResults: [SearchResult] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +31,28 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource{
     //to be implemented
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+        if searchResults.count == 0 {
+            return 1
+        } else {
+            retuern searchResults.count
+        }
     }
     func tableView (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "SearchResultCell"
         
         var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
+        }
+        if searchResults.count == 0 {
+            cell.textLabel!.text = "(Nothing Found)"
+            cell.detailTextLabel!.text = ""
+        } else {
+            let searchResult = searchResults[indexPath.row]
+            cell.textLabel!.text = searchResult.name
+            cell.detailTextLabel!.text = searchResult.artistName
         }
         
-        cell.textLabel!.text = searchResults[indexPath.row]
         return cell
     }
 }
@@ -54,10 +64,13 @@ extension SearchViewController: UITableViewDelegate {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        searchResults = []
         
         for i in 0...2 {
-            searchResults.append(String(format: "Fake Result %d for '%@'", i, searchBar.text!))
+            let searchResult = SearchResult()
+            searchResult.name = (String(format: "Fake Result %d for '%@'", i))
+            searchResult.artistName = searchBar.text!
+            searchResults.append(searchResult)
+            
         }
         
         tableView.reloadData()
