@@ -19,12 +19,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="JtX-ja-pVx">
-                                <rect key="frame" x="0.0" y="70" width="375" height="597"/>
+                                <rect key="frame" x="0.0" y="76" width="375" height="591"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="6ii-32-HeK"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="iRN-bb-grN"/>
+                                </connections>
                             </tableView>
                             <searchBar contentMode="redraw" text="" placeholder="App name, artist, song, album, e-book" translatesAutoresizingMaskIntoConstraints="NO" id="fOJ-OY-MUg">
-                                <rect key="frame" x="0.0" y="14" width="375" height="56"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="kCj-N2-IaA"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -33,9 +40,9 @@
                             <constraint firstItem="JtX-ja-pVx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CDf-Qk-jHE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="JtX-ja-pVx" secondAttribute="bottom" id="D67-7n-kJF"/>
                             <constraint firstItem="fOJ-OY-MUg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="DrM-hn-qbM"/>
-                            <constraint firstItem="JtX-ja-pVx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="IvJ-au-kNG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fOJ-OY-MUg" secondAttribute="trailing" id="dDu-N6-4DL"/>
-                            <constraint firstItem="JtX-ja-pVx" firstAttribute="top" secondItem="fOJ-OY-MUg" secondAttribute="bottom" id="zMh-ig-wec"/>
+                            <constraint firstItem="JtX-ja-pVx" firstAttribute="top" secondItem="fOJ-OY-MUg" secondAttribute="bottom" id="mh9-5s-mD7"/>
+                            <constraint firstItem="fOJ-OY-MUg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="x3n-oq-avm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
