@@ -29,6 +29,7 @@ class SearchViewController: UIViewController {
     }
     }
 extension SearchViewController: UITableViewDataSource{
+    
     //to be implemented
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchResults.count == 0 {
@@ -37,6 +38,7 @@ extension SearchViewController: UITableViewDataSource{
             return searchResults.count
         }
     }
+    
     func tableView (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as! SearchResultCell
         
@@ -51,7 +53,7 @@ extension SearchViewController: UITableViewDataSource{
         
         return cell
     }
-    //function to parse through the json data recieved
+    //function to parse through the json data recieved sugoily
     func parse(json: String) -> [String: Any]? {
         guard let data = json.data(using: .utf8, allowLossyConversion: false)
             else { return nil}
@@ -63,12 +65,45 @@ extension SearchViewController: UITableViewDataSource{
             return nil
         }
     }
+    
+    func parse(dictionary: [String: Any]) {
+        //1
+        guard let array = dictionary["results"] as? [Any] else {
+            print("Expected 'results' array")
+            return
+        }
+        //2
+        for resultDict in array {
+            //3
+            if let resultDict = resultDict as? [String: Any] {
+                if let wrapperType = resultDict["wrapperType"] as? String,
+                    let kind = resultDict["kind"] as? String {
+                    print("wrapperType: \(wrapperType), kind: \(kind)")
+                }
+            }
+        }
+    }
+    
+    //Getting the URL from bada sankrei
     func iTunesURL(searchText: String) -> URL {
         let escapedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
         let urlString = String(format:"https://itunes.apple.com/search?term=%@",escapedSearchText)
         let url = URL(string: urlString)
         return url!
     }
+    
+    //method to handle network errors senpai
+    func showNetworkError() {
+        let alert = UIAlertController(
+            title: "Well Damn...",
+            message: "There was an error reading from the iTunes Store. Please try again.",
+            preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     func performStoreRequest(with url: URL) -> String? {
         do {
             return try String(contentsOf: url, encoding: .utf8)
@@ -79,6 +114,9 @@ extension SearchViewController: UITableViewDataSource{
     }
 }
 
+
+//Extensions go here |||
+//                   vvv
 extension SearchViewController: UITableViewDelegate {
         //to be implemented
 }
@@ -95,10 +133,13 @@ extension SearchViewController: UISearchBarDelegate {
             print("Recieved JSON string'\(jsonString)'")
             if let jsonDictionary = parse(json: jsonString) {
                 print("Dictionary \(jsonDictionary)")
+                parse(dictionary: jsonDictionary)
+                tableView.reloadData()
+                return
             }
         }
+        showNetworkError()
         
-        tableView.reloadData()
         
     }
     func position(for bar: UIBarPositioning) -> UIBarPosition {
