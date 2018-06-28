@@ -17,18 +17,14 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let cellNib = UINib(nibName: "SearchResultCell", bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: "SearchResultCell")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-
-    
-    
-    
     }
 extension SearchViewController: UITableViewDataSource{
     //to be implemented
@@ -36,16 +32,12 @@ extension SearchViewController: UITableViewDataSource{
         if searchResults.count == 0 {
             return 1
         } else {
-            retuern searchResults.count
+            return searchResults.count
         }
     }
     func tableView (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "SearchResultCell"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath)
         
-        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        if cell == nil {
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
-        }
         if searchResults.count == 0 {
             cell.textLabel!.text = "(Nothing Found)"
             cell.detailTextLabel!.text = ""
