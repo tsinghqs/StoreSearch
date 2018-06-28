@@ -51,6 +51,32 @@ extension SearchViewController: UITableViewDataSource{
         
         return cell
     }
+    //function to parse through the json data recieved
+    func parse(json: String) -> [String: Any]? {
+        guard let data = json.data(using: .utf8, allowLossyConversion: false)
+            else { return nil}
+        
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        } catch {
+            print("JSON Error: \(error)")
+            return nil
+        }
+    }
+    func iTunesURL(searchText: String) -> URL {
+        let escapedSearchText = searchText.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+        let urlString = String(format:"https://itunes.apple.com/search?term=%@",escapedSearchText)
+        let url = URL(string: urlString)
+        return url!
+    }
+    func performStoreRequest(with url: URL) -> String? {
+        do {
+            return try String(contentsOf: url, encoding: .utf8)
+        } catch {
+            print("Download Error: \(error)")
+            return nil
+        }
+    }
 }
 
 extension SearchViewController: UITableViewDelegate {
@@ -61,12 +87,15 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         
-        for i in 0...2 {
-            let searchResult = SearchResult()
-            searchResult.name = (String(format: "Fake Result %d for '%@'", i))
-            searchResult.artistName = searchBar.text!
-            searchResults.append(searchResult)
-            
+        searchResults = []
+        
+        let url = iTunesURL(searchText: searchBar.text!)
+        print("URL: '/(url)'")
+        if let jsonString = performStoreRequest(with: url) {
+            print("Recieved JSON string'\(jsonString)'")
+            if let jsonDictionary = parse(json: jsonString) {
+                print("Dictionary \(jsonDictionary)")
+            }
         }
         
         tableView.reloadData()
