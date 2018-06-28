@@ -20,6 +20,7 @@ class SearchViewController: UIViewController {
         let cellNib = UINib(nibName: "SearchResultCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "SearchResultCell")
         tableView.rowHeight = 80
+        searchBar.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
