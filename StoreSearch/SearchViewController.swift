@@ -66,21 +66,31 @@ extension SearchViewController: UITableViewDataSource{
         }
     }
     
-    func parse(dictionary: [String: Any]) {
+    func parse(dictionary: [String: Any])->[SearchResult] {
         //1
         guard let array = dictionary["results"] as? [Any] else {
             print("Expected 'results' array")
-            return
+            return []
         }
         //2
+        var searchResults: [SearchResult] = []
         for resultDict in array {
             //3
             if let resultDict = resultDict as? [String: Any] {
-                if let wrapperType = resultDict["wrapperType"] as? String,
-                    let kind = resultDict["kind"] as? String {
-                    print("wrapperType: \(wrapperType), kind: \(kind)")
+                var searchResult: SearchResult?
+                if let wrapperType = resultDict["wrapperType"] as? String {
+                    switch wrapperType {
+                    case "track":
+                        searchResult = parse(track: resultDict)
+                    default:
+                        break
+                    }
+                }
+                if let result = searchResult {
+                    searchResults.append(result)
                 }
             }
+            return searchResults
         }
     }
     
