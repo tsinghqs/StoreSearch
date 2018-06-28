@@ -19,6 +19,7 @@ class SearchViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let cellNib = UINib(nibName: "SearchResultCell", bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: "SearchResultCell")
+        tableView.rowHeight = 80
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,15 +37,15 @@ extension SearchViewController: UITableViewDataSource{
         }
     }
     func tableView (_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchResultCell", for: indexPath) as! SearchResultCell
         
         if searchResults.count == 0 {
-            cell.textLabel!.text = "(Nothing Found)"
-            cell.detailTextLabel!.text = ""
+            cell.nameLabel.text = "(Nothing Found)"
+            cell.artistNameLabel.text = ""
         } else {
             let searchResult = searchResults[indexPath.row]
-            cell.textLabel!.text = searchResult.name
-            cell.detailTextLabel!.text = searchResult.artistName
+            cell.nameLabel.text = searchResult.name
+            cell.artistNameLabel.text = searchResult.artistName
         }
         
         return cell

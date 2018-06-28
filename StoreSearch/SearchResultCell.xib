@@ -18,17 +18,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="318" height="72.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gux-aa-RTK">
-                        <rect key="frame" x="8" y="8" width="63" height="56.5"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="noImage" translatesAutoresizingMaskIntoConstraints="NO" id="gux-aa-RTK">
+                        <rect key="frame" x="8" y="8" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="AbC-ZT-cLX"/>
+                            <constraint firstAttribute="width" constant="60" id="M0J-tr-83F"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3l-SH-fRC">
-                        <rect key="frame" x="79" y="8" width="49" height="31"/>
+                        <rect key="frame" x="76" y="8" width="49" height="31"/>
                         <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-Bz-Avx">
-                        <rect key="frame" x="78" y="38" width="78" height="23.5"/>
+                        <rect key="frame" x="78" y="38" width="78" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" name="Papyrus" family="Papyrus" pointSize="15"/>
                         <nil key="textColor"/>
@@ -36,13 +40,10 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="gux-aa-RTK" firstAttribute="leading" secondItem="KBF-cf-Nej" secondAttribute="leading" constant="8" id="183-zC-orD"/>
                     <constraint firstItem="i3l-SH-fRC" firstAttribute="top" secondItem="KBF-cf-Nej" secondAttribute="top" constant="8" id="8aS-d8-1zO"/>
+                    <constraint firstItem="gux-aa-RTK" firstAttribute="top" secondItem="KBF-cf-Nej" secondAttribute="top" constant="8" id="Aba-Zi-qjD"/>
                     <constraint firstItem="i3l-SH-fRC" firstAttribute="leading" secondItem="gux-aa-RTK" secondAttribute="trailing" constant="8" id="Ddw-LB-1xY"/>
-                    <constraint firstAttribute="bottom" secondItem="gux-aa-RTK" secondAttribute="bottom" constant="8" id="MGc-jh-P73"/>
-                    <constraint firstItem="i3l-SH-fRC" firstAttribute="leading" secondItem="gux-aa-RTK" secondAttribute="trailing" constant="8" id="Ypy-Ip-Dgi"/>
-                    <constraint firstItem="gux-aa-RTK" firstAttribute="top" secondItem="KBF-cf-Nej" secondAttribute="top" constant="8" id="gzq-5A-x28"/>
-                    <constraint firstAttribute="trailing" secondItem="i3l-SH-fRC" secondAttribute="trailing" constant="190" id="tpW-Fn-jBC"/>
+                    <constraint firstItem="gux-aa-RTK" firstAttribute="leading" secondItem="KBF-cf-Nej" secondAttribute="leading" constant="8" id="bfp-qY-fPv"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -53,4 +54,7 @@
             <point key="canvasLocation" x="-266" y="151.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="noImage" width="59" height="63"/>
+    </resources>
 </document>
