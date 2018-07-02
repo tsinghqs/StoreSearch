@@ -66,14 +66,14 @@ extension SearchViewController: UITableViewDataSource{
         }
     }
     
-    func parse(dictionary: [String: Any])->[SearchResult] {
+    func parse(dictionary: [String: Any]) {
         //1
         guard let array = dictionary["results"] as? [Any] else {
             print("Expected 'results' array")
-            return []
+            return
         }
         //2
-        var searchResults: [SearchResult] = []
+        //var searchResults: [SearchResult] = []
         for resultDict in array {
             //3
             if let resultDict = resultDict as? [String: Any] {
@@ -90,8 +90,32 @@ extension SearchViewController: UITableViewDataSource{
                     searchResults.append(result)
                 }
             }
-            return searchResults
         }
+        //return searchResults
+
+    }
+    
+    //instantiate new searchResult object
+    //get values out of dictionary and put them in searchResult properties
+    func parse(track dictionary: [String: Any]) -> SearchResult {
+        let searchResult = SearchResult()
+        
+        searchResult.name = dictionary["trackName"] as? String ?? ""
+        searchResult.artistName = dictionary["artistName"] as? String ?? ""
+        searchResult.artworkSmallURL = dictionary["artworkURL60"] as? String ?? ""
+        searchResult.artworkLargeURL = dictionary["artworkUrl100"] as? String ?? ""
+        searchResult.storeURL = dictionary["trackViewUrl"] as? String ?? ""
+        searchResult.kind = dictionary["kind"] as? String ?? ""
+        searchResult.currency = dictionary["currency"] as? String ?? ""
+        
+        if let price = dictionary["trackPrice"] as? Double {
+            searchResult.price = price
+        }
+        if let genre = dictionary["primaryGenreName"] as? String {
+            searchResult.genre = genre
+        }
+        return searchResult
+        
     }
     
     //Getting the URL from bada sankrei
